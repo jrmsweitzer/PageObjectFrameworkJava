@@ -20,28 +20,6 @@ public class Presentation extends PageObjectTest {
 	String NOTSET = "Not Set";
 	
 	@Test
-	public void multipleBrowserTest()
-	{
-		Google google = new Google(getDriver());
-		google.searchFor("Test Search");
-	}
-	
-	@Test
-	public void loggerTest() throws IOException
-	{
-		FileWriter writer;
-		File f = new File("C://Selenium//Logs//TestLog.txt");
-		f.mkdir();
-		try {
-			writer = new FileWriter("C://Selenium//Logs//TestLog.txt", true);
-			writer.write("This is a new line");
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@Test
 	public void presentation() {
 
 
