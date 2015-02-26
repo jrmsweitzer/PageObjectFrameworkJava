@@ -6,6 +6,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;
 
+/// <summary>
+/// A custom class combining a By locator with a string formatter.
+/// <para> @author: Jeremy Sweitzer</para>
+/// </summary>
 public class ByFormatter extends By {
 	
 	private ByFormatter(String locator, String formatter)
