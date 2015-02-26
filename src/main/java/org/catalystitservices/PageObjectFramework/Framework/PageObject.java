@@ -16,23 +16,14 @@ public class PageObject {
 	protected String _url;
 	protected String _title;
 	
+	private int _defaultTimeout = SeleniumSettings.getDefaultTimeout();
+	
 	protected WindowHandler _windowHandler;
-	
-	private int _timeout = 60;
-	
-	private boolean _logActions = false;
-	//private SeleniumLogger _logger;
-	//private String _actionLog = "Actions";
 	
 	public PageObject(WebDriver driver)
 	{
 		_driver = driver;
 		_windowHandler = new WindowHandler(_driver);
-
-        if (_logActions)
-        {
-           // _logger = SeleniumLogger.getLogger(_actionLog);
-        }
 	}
 	
 	// Shared XPaths
@@ -41,10 +32,6 @@ public class PageObject {
 	
 	protected void clear(By by)
 	{
-        if (_logActions)
-        {
-            //_logger.logMessage(String.format("Clear: %s", by));
-        }
 		find(by).clear();
 	}
 	
@@ -56,10 +43,6 @@ public class PageObject {
 	
 	protected void click(By by)
 	{
-        if (_logActions)
-        {
-            //_logger.logMessage(String.format("Click: %s", by));
-        }
 		find(by).click();
 	}
 	
@@ -100,10 +83,6 @@ public class PageObject {
 	
 	public void goTo(String url, String expectedTitle)
 	{
-        if (_logActions)
-        {
-            //_logger.logMessage(String.format("GoUrl: %s", url));
-        }
 		_driver.get(url);
 		
 		if("optionalTitle" != expectedTitle &&
@@ -119,21 +98,11 @@ public class PageObject {
 	
 	protected void sendKeys(By by, String value)
 	{
-        if (_logActions)
-        {
-            //_logger.logMessage(String.format("SndKy: %s", value));
-            //_logger.logMessage(String.format("   to: %s", by));
-        }
 		find(by).sendKeys(value);
 	}
 	
 	protected void selectByText(By by, String optionText)
 	{
-        if (_logActions)
-        {
-           // _logger.logMessage(String.format("Selct: %s", optionText));
-            //_logger.logMessage(String.format("   at: %s", by));
-        }
 		Select select = new Select(find(by));
 		if (!select.equals(null))
 		{
@@ -173,7 +142,7 @@ public class PageObject {
 	
 	protected void waitForElementToBeDeleted(By by)
 	{
-		waitForElementToBeDeleted(by, _timeout);
+		waitForElementToBeDeleted(by, _defaultTimeout);
 	}
 	
 	protected void waitForElementToBeDeleted(By by, long timeout)
@@ -193,7 +162,7 @@ public class PageObject {
 	
 	protected void waitForElementToExist(By by)
 	{
-		waitForElementToExist(by, _timeout);
+		waitForElementToExist(by, _defaultTimeout);
 	}
 	
 	protected void waitForElementToExist(By by, long timeout)
@@ -210,10 +179,52 @@ public class PageObject {
 			}
 		}
 	}
+
+    protected void waitForPartialUrl(String partialUrl)
+    {
+        waitForPartialUrl(partialUrl, _defaultTimeout);
+    }
+    
+    protected void waitForPartialUrl(String partialUrl, int timeout)
+    {
+		long startTime = System.currentTimeMillis();
+		
+		while(!getUrl().contains(partialUrl))
+		{
+			if (System.currentTimeMillis() - startTime > timeout)
+			{
+                String errMsg = String.format(
+                        "Url did not contain string '%s' after %d seconds!",
+                        partialUrl, timeout / 1000);
+                Assert.fail(errMsg);
+			}
+		}
+    }
+
+    protected void waitForTitle(String expectedTitle)
+    {
+        waitForPartialUrl(expectedTitle, _defaultTimeout);
+    }
+    
+    protected void waitForTitle(String expectedTitle, int timeout)
+    {
+		long startTime = System.currentTimeMillis();
+		
+		while(!getTitle().contains(expectedTitle))
+		{
+			if (System.currentTimeMillis() - startTime > timeout)
+			{
+                String errMsg = String.format(
+                        "Title did not contain string '%s' after %d seconds!",
+                        expectedTitle, timeout / 1000);
+                Assert.fail(errMsg);
+			}
+		}
+    }
 	
 	protected void waitForUrl(String url)
 	{
-		waitForUrl(url, _timeout);
+		waitForUrl(url, _defaultTimeout);
 	}
 	
 	protected void waitForUrl(String url, long timeout)

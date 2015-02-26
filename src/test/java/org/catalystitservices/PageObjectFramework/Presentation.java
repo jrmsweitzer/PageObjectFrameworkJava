@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.catalystitservices.PageObjectFramework.Framework.PageObjectTest;
 import org.catalystitservices.PageObjectFramework.Models.CookieClicker;
 import org.catalystitservices.PageObjectFramework.Models.Email;
+import org.catalystitservices.PageObjectFramework.Models.Google;
 import org.catalystitservices.PageObjectFramework.Models.YouTube;
 import org.catalystitservices.PageObjectFramework.Models.Heroku.HerokuCheckboxes;
 import org.catalystitservices.PageObjectFramework.Models.Heroku.HerokuDropdown;
@@ -17,6 +18,13 @@ import org.junit.Test;
 public class Presentation extends PageObjectTest {
 
 	String NOTSET = "Not Set";
+	
+	@Test
+	public void multipleBrowserTest()
+	{
+		Google google = new Google(getDriver());
+		google.searchFor("Test Search");
+	}
 	
 	@Test
 	public void loggerTest() throws IOException

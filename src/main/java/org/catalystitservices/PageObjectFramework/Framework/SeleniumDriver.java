@@ -3,7 +3,9 @@ package org.catalystitservices.PageObjectFramework.Framework;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public class SeleniumDriver {
 	
@@ -13,7 +15,23 @@ public class SeleniumDriver {
 	{
 		if (_driver == null)
 		{
-			_driver = new FirefoxDriver();
+			if (SeleniumSettings.getBrowser() == SeleniumSettings.FIREFOX)
+			{
+				_driver = new FirefoxDriver();				
+			}
+			else if (SeleniumSettings.getBrowser() == SeleniumSettings.CHROME)
+			{
+				System.setProperty("webdriver.chrome.driver", 
+						SeleniumSettings.getDriver(SeleniumSettings.CHROME));
+				_driver = new ChromeDriver();
+				
+			}
+			else
+			{
+				System.setProperty("webdriver.ie.driver", 
+						SeleniumSettings.getDriver(SeleniumSettings.IE));
+				_driver = new InternetExplorerDriver();
+			}
 			configureDriver();
 		}
 		return _driver;
