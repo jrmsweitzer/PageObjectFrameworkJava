@@ -262,12 +262,12 @@ public class PageObject {
 		waitForElementToExist(by, _defaultTimeout);
 	}
 
-    /// <summary>
-    /// Pauses play until a given element becomes visible.
-    /// <para>@param by - the by selector for the given element</para>
-    /// <para>@param timeout (optional) - the time, in milliseconds, to wait for the element to exist</para>
-    /// <para>If no time is given for the timeout, will use the default timeout.</para>
-    /// </summary>
+	/**
+	 * Pauses play until a given element becomes visible.
+	 * @param by - the by selector for the given element
+	 * @param timeout (optional) - the time, in milliseconds, to wait for the element to exist
+	 * If no time is given for the timeout, will use the default timeout.
+	 */
 	protected void waitForElementToExist(By by, long timeout)
 	{
 		long startTime = System.currentTimeMillis();
@@ -283,23 +283,21 @@ public class PageObject {
 		}
 	}
 
-    /// <summary>
-    /// Pauses play until the current Url contains partialUrl string.
-    /// <para>@param partialUrl - the partial url of the page to wait for</para>
-    /// <para>@param timeout (optional) - the time, in milliseconds, to wait for the url</para>
-    /// <para>If no time is given for the timeout, will use the default timeout.</para>
-    /// </summary>
+	/**
+	 * Pauses play until the current Url contains partialUrl string.
+	 * @param partialUrl - the partial url of the page to wait for
+	 */
     protected void waitForPartialUrl(String partialUrl)
     {
         waitForPartialUrl(partialUrl, _defaultTimeout);
     }
 
-    /// <summary>
-    /// Pauses play until the current Url contains partialUrl string.
-    /// <para>@param partialUrl - the partial url of the page to wait for</para>
-    /// <para>@param timeout (optional) - the time, in milliseconds, to wait for the url</para>
-    /// <para>If no time is given for the timeout, will use the default timeout.</para>
-    /// </summary>
+    /**
+     * Pauses play until the current Url contains partialUrl string.
+     * @param partialUrl - the partial url of the page to wait for
+     * @param timeout (optional) - the time, in milliseconds, to wait for the url
+     * If no time is given for the timeout, will use the default timeout.
+     */
     protected void waitForPartialUrl(String partialUrl, int timeout)
     {
 		long startTime = System.currentTimeMillis();
@@ -316,23 +314,21 @@ public class PageObject {
 		}
     }
 
-    /// <summary>
-    /// Pauses play until the current Title contains expectedTitle string.
-    /// <para>@param expectedTitle - the expected title of the page to wait for</para>
-    /// <para>@param timeout (optional) - the time, in milliseconds, to wait for the title</para>
-    /// <para>If no time is given for the timeout, will use the default timeout.</para>
-    /// </summary>
+    /**
+     * Pauses play until the current Title contains expectedTitle string.
+     * @param expectedTitle - the expected title of the page to wait for.
+     */
     protected void waitForTitle(String expectedTitle)
     {
         waitForPartialUrl(expectedTitle, _defaultTimeout);
     }
 
-    /// <summary>
-    /// Pauses play until the current Title contains expectedTitle string.
-    /// <para>@param expectedTitle - the expected title of the page to wait for</para>
-    /// <para>@param timeout (optional) - the time, in milliseconds, to wait for the title</para>
-    /// <para>If no time is given for the timeout, will use the default timeout.</para>
-    /// </summary>
+    /**
+     * Pauses play until the current Title contains expectedTitle string.
+     * @param expectedTitle - the expected title of the page to wait for
+     * @param timeout (optional) - the time, in milliseconds, to wait for the title.
+     * If no time is given for the timeout, will use the default timeout.
+     */
     protected void waitForTitle(String expectedTitle, int timeout)
     {
 		long startTime = System.currentTimeMillis();
@@ -349,23 +345,21 @@ public class PageObject {
 		}
     }
 
-    /// <summary>
-    /// Pauses play until the page is on the given URL.
-    /// <para>@param url - the url of the page to wait for</para>
-    /// <para>@param timeout (optional) - the time, in milliseconds, to wait for the url</para>
-    /// <para>If no time is given for the timeout, will use the default timeout.</para>
-    /// </summary>
+    /**
+     * Pauses play until the page is on the given URL.
+     * @param url - the url of the page to wait for
+     */
 	protected void waitForUrl(String url)
 	{
 		waitForUrl(url, _defaultTimeout);
 	}
 
-    /// <summary>
-    /// Pauses play until the page is on the given URL.
-    /// <para>@param url - the url of the page to wait for</para>
-    /// <para>@param timeout (optional) - the time, in milliseconds, to wait for the url</para>
-    /// <para>If no time is given for the timeout, will use the default timeout.</para>
-    /// </summary>
+	/**
+	 * Pauses play until the page is on the given URL.
+	 * @param url - the url of the page to wait for
+	 * @param timeout (optional) - the time, in milliseconds, to wait for the url
+	 * If no time is given for the timeout, will use the default timeout.
+	 */
 	protected void waitForUrl(String url, long timeout)
 	{
 		long startTime = System.currentTimeMillis();
