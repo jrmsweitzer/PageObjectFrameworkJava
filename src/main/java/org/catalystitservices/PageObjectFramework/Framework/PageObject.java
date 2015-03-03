@@ -43,98 +43,109 @@ public class PageObject {
 	// Shared XPaths
 	protected static By body = By.xpath("//body");
 	protected static By title = By.xpath("//title");
-	
-    /// <summary>Clears an input box
-    /// <para> @param by - the by selector for the given element</para>
-    /// </summary>
+
+	/**
+	 * Clears an input box
+	 * @param by - the by selector for the given element
+	 */
 	protected void clear(By by)
 	{
 		find(by).clear();
 	}
-	
-    /// <summary>Clears then inputs data into an input box
-    /// <para> @param by - the by selector for the given element</para>
-    /// <para> @param value - the text to input into the input box.</para>
-    /// </summary>
+
+	/**
+	 * Clears then inputs data into an input box
+	 * @param by - the by selector for the given element
+	 * @param value - the text to input into the input box.
+	 */
 	protected void clearAndSendKeys(By by, String value)
 	{
 		clear(by);
 		sendKeys(by, value);
 	}
 	
-    /// <summary>Click the element at the given selector.
-    /// <para> @param by - the by selector for the given element</para>
-    /// </summary>
+	/**
+	 * Click the element at the given selector.
+	 * @param by - the by selector for the given element
+	 */
 	protected void click(By by)
 	{
 		find(by).click();
 	}
-	
-    /// <summary>Finds the element by the given selector
-    /// <para> @param by - the by selector for the given element</para>
-    /// </summary>
+
+	/**
+	 * Finds the element by the given selector
+	 * @param by - the by selector for the given element.
+	 * @return WebElement - the element found at the given by.
+	 */
 	protected WebElement find(By by)
 	{
 		return _driver.findElement(by);
 	}
 
-    /// <summary> Finds all elements by the given selector
-    /// <para> @param by - the by selector for the given element</para>
-    /// </summary>	
+	/**
+	 * Finds all elements by the given selector.
+	 * @param by - the by selector for the given element.
+	 * @return Collection<WebElement> - a list of all the elements found at the given by.
+	 */
 	protected Collection<WebElement> findAll(By by)
 	{
 		return _driver.findElements(by);
 	}
 
-    /// <summary>Gets everything inside the html tags for the given selector
-    /// <para> @param by - the by selector for the given element</para>
-    /// </summary>
+	/**
+	 * Gets everything inside the html tags for the given selector.
+	 * @param by - the by selector for the given element.
+	 * @return String - the inner html of the given by.
+	 */
 	protected String getInnerHtml(By by)
 	{
 		return find(by).getAttribute("innerHTML");
 	}
 
-    /// <summary>Gets the text from the given locator
-    /// <para> @param by - the by selector for the given element</para>
-    /// </summary>	
+	/**
+	 * Gets the text from the given locator.
+	 * @param by - the by selector for the given element.
+	 * @return String - the text at the given by.
+	 */
 	protected String getText(By by)
 	{
 		return find(by).getText();
 	}
 
-    /// <summary>
-    /// Gets the title of the current page
-    /// </summary>
+	/**
+	 * Gets the title of the current page.
+	 * @return String - the title at the current page.
+	 */
 	public String getTitle()
 	{
 		return getInnerHtml(title);
 	}
 
-    /// <summary>
-    /// Gets the URL of the current page
-    /// </summary>
+	/**
+	 * Gets the URL of the current page.
+	 * @return String - the current URL.
+	 */
 	public String getUrl()
 	{
 		return _driver.getCurrentUrl();
 	}
 
-    /// <summary>Go to the given URL.
-    /// <para> @param url - the full url of the page you want to visit</para>
-    /// <para> @param expectedTitle - </para>
-    /// <para> An optional title to add. If you supply a title, the test will </para>
-    /// <para> fail if the page you end up on doesn't match the given title. </para>
-    /// </summary>
+	/**
+	 * Go to the given URL.
+	 * @param url - the full url of the page you want to visit
+	 */
 	public void goTo(String url)
 	{
 		goTo(url, "optionalTitle");
 	}
 
-    /// <summary>Go to the given URL.
-    /// <para> @param url - the full url of the page you want to visit</para>
-    /// <para> @param expectedTitle - </para>
-    /// <para> An optional title to add. If you supply a title, the test will </para>
-    /// <para> fail if the page you end up on doesn't match the given title. </para>
-    /// </summary>
+	/**
+	 * Go to the given URL.
+	 * @param url - the full url of the page you want to visit
+	 * @param expectedTitle - An optional title to add. If you supply a title, the test will
+	 * fail if the page you end up on doesn't match the given title. 
+	 */
 	public void goTo(String url, String expectedTitle)
 	{
 		_driver.get(url);
@@ -150,19 +161,21 @@ public class PageObject {
 		}
 	}
 
-    /// <summary>Inputs data into an input box
-    /// <para> @param by - the by selector for the given element</para>
-    /// <para> @param value - the text to input into the input box.</para>
-    /// </summary>
+	/**
+	 * Inputs data into an input box
+	 * @param by - the by selector for the given element
+	 * @param value - the text to input into the input box.
+	 */
 	protected void sendKeys(By by, String value)
 	{
 		find(by).sendKeys(value);
 	}
 
-    /// <summary>Selects an option from a select box based on text
-    /// <para> @param by - the by selector for the given element </para>
-    /// <para> @param optionText - the text to select by </para>
-    /// </summary>
+	/**
+	 * Selects an option from a select box based on text
+	 * @param by - the by selector for the given element
+	 * @param optionText - the text to select by
+	 */
 	protected void selectByText(By by, String optionText)
 	{
 		Select select = new Select(find(by));
@@ -187,9 +200,10 @@ public class PageObject {
 		}
 	}
 
-    /// <summary> Suspends the current thread for a specified time.
-    /// <para>@param millisecondsTimeout - the timeout in milliseconds</para>
-    /// </summary>
+	/**
+	 * Suspends the current thread for a specified time.
+	 * @param timeout - the timeout in milliseconds
+	 */
 	public void sleep(long timeout)
 	{
 		try {
@@ -200,31 +214,30 @@ public class PageObject {
 		}
 	}
 
-    /// <summary> Submits form for the given locator.
-    /// <para> @param by - the by selector for the given element </para>
-    /// </summary>
+	/**
+	 * Submits form for the given locator.
+	 * @param by - the by selector for the given element
+	 */
 	protected void submit(By by)
 	{
 		find(by).submit();
 	}
 
-    /// <summary>
-    /// Pauses play until a given element is no longer on the DOM.
-    /// <para>@param by - the by selector for the given element</para>
-    /// <para>@param timeout (optional) - the time, in milliseconds, to wait for the element to be deleted.</para>
-    /// <para>If no time is given for the timeout, will use the default timeout.</para>
-    /// </summary>
+	/**
+	 * Pauses play until a given element is no longer on the DOM.
+	 * @param by - the by selector for the given element
+	 */
 	protected void waitForElementToBeDeleted(By by)
 	{
 		waitForElementToBeDeleted(by, _defaultTimeout);
 	}
 
-    /// <summary>
-    /// Pauses play until a given element is no longer on the DOM.
-    /// <para>@param by - the by selector for the given element</para>
-    /// <para>@param timeout (optional) - the time, in milliseconds, to wait for the element to be deleted.</para>
-    /// <para>If no time is given for the timeout, will use the default timeout.</para>
-    /// </summary>
+	/**
+	 * Pauses play until a given element is no longer on the DOM.
+	 * @param by - the by selector for the given element
+	 * @param timeout (optional) - the time, in milliseconds, to wait for the element to be deleted.
+	 * If no time is given for the timeout, will use the default timeout.
+	 */
 	protected void waitForElementToBeDeleted(By by, long timeout)
 	{
 		long startTime = System.currentTimeMillis();
@@ -240,12 +253,10 @@ public class PageObject {
 		}
 	}
 
-    /// <summary>
-    /// Pauses play until a given element becomes visible.
-    /// <para>@param by - the by selector for the given element</para>
-    /// <para>@param timeout (optional) - the time, in milliseconds, to wait for the element to exist</para>
-    /// <para>If no time is given for the timeout, will use the default timeout.</para>
-    /// </summary>
+	/**
+	 * Pauses play until a given element becomes visible.
+	 * @param by - the by selector for the given element
+	 */
 	protected void waitForElementToExist(By by)
 	{
 		waitForElementToExist(by, _defaultTimeout);
