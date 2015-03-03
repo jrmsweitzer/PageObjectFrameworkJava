@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 
 public class Google extends PageObject {
 	
+	// Declare the logger
 	private SeleniumLogger _logger;
 
 	public Google(WebDriver driver) {
@@ -14,7 +15,10 @@ public class Google extends PageObject {
 		_url = "https://www.google.com";
 		goTo(_url);
 		
+		// Give it a descriptive name...
 		_logger = SeleniumLogger.getLogger("Google");
+		// ...then you may begin using it. It will show up in 
+		// C:/Selenium/Logs/yyyy-MM-dd_descriptiveName.txt
 		_logger.logMessage("Making new Google PageObject.");
 	}
 	
