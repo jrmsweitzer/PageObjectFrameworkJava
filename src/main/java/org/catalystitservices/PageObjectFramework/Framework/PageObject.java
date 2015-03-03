@@ -1,11 +1,12 @@
 package org.catalystitservices.PageObjectFramework.Framework;
 
 import java.util.Collection;
+import java.util.NoSuchElementException;
 
 import junit.framework.Assert;
 
+import org.catalystitservices.PageObjectFramework.Framework.Exceptions.InvalidSelectOptionException;
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -30,14 +31,23 @@ public class PageObject {
 	protected String _title;
 	
 	// Config stuff
+	private boolean _logActions = SeleniumSettings.logAllActions();
+	private String _actionLog = SeleniumSettings.getActionLogName();
+	
 	private int _defaultTimeout = SeleniumSettings.getDefaultTimeout();
 	
+	private SeleniumLogger _logger;
 	protected WindowHandler _windowHandler;
 	
 	public PageObject(WebDriver driver)
 	{
 		_driver = driver;
 		_windowHandler = new WindowHandler(_driver);
+		
+		if(_logActions)
+		{
+			_logger = SeleniumLogger.getLogger(_actionLog);
+		}
 	}
 	
 	// Shared XPaths
@@ -50,6 +60,10 @@ public class PageObject {
 	 */
 	protected void clear(By by)
 	{
+        if (_logActions)
+        {
+            _logger.logMessage(String.format("Clear: %s", by));
+        }
 		find(by).clear();
 	}
 
@@ -70,6 +84,10 @@ public class PageObject {
 	 */
 	protected void click(By by)
 	{
+        if (_logActions)
+        {
+            _logger.logMessage(String.format("Click: %s", by));
+        }
 		find(by).click();
 	}
 
@@ -80,6 +98,19 @@ public class PageObject {
 	 */
 	protected WebElement find(By by)
 	{
+		long startTime = System.currentTimeMillis();
+		
+		while(_driver.findElements(by).size() == 0)
+		{
+			if (System.currentTimeMillis() - startTime > _defaultTimeout)
+			{
+                String errMsg = String.format(
+						"Could not find element %s after %d seconds.",
+						by,
+						_defaultTimeout);
+				throw new NoSuchElementException(errMsg);
+			}
+		}
 		return _driver.findElement(by);
 	}
 
@@ -148,16 +179,15 @@ public class PageObject {
 	 */
 	public void goTo(String url, String expectedTitle)
 	{
+        if (_logActions)
+        {
+            _logger.logMessage(String.format("GoUrl: %s", url));
+        }
 		_driver.get(url);
 		
-		if("optionalTitle" != expectedTitle &&
-				!getTitle().contains(expectedTitle))
+		if("optionalTitle" != expectedTitle)
 		{
-			String errMsg = String.format(
-					"PageObject: We're not on the expected page! " +
-					"Expected: %s; Actual: %s",
-					expectedTitle, getTitle());
-			Assert.fail(errMsg);
+			waitForTitle(expectedTitle);
 		}
 	}
 
@@ -168,6 +198,11 @@ public class PageObject {
 	 */
 	protected void sendKeys(By by, String value)
 	{
+        if (_logActions)
+        {
+            _logger.logMessage(String.format("SndKy: {0}", value));
+            _logger.logMessage(String.format("   to: {0}", by));
+        }
 		find(by).sendKeys(value);
 	}
 
@@ -175,9 +210,15 @@ public class PageObject {
 	 * Selects an option from a select box based on text
 	 * @param by - the by selector for the given element
 	 * @param optionText - the text to select by
+	 * @throws InvalidSelectOptionException 
 	 */
-	protected void selectByText(By by, String optionText)
+	protected void selectByText(By by, String optionText) throws InvalidSelectOptionException
 	{
+        if (_logActions)
+        {
+            _logger.logMessage(String.format("Selct: {0}", optionText));
+            _logger.logMessage(String.format("   at: {0}", by));
+        }
 		Select select = new Select(find(by));
 		if (!select.equals(null))
 		{
@@ -190,13 +231,13 @@ public class PageObject {
 				String errMsg = String.format(
 						"PageObject: There is no option '%s' in '%s'.",
 						optionText, by);
-				Assert.fail(errMsg);
+				throw new InvalidSelectOptionException(errMsg);
 			}
 		}
 		else
 		{
 			String errMsg = "Cannot find element " + by.toString();
-			throw new ElementNotVisibleException(errMsg);
+			throw new NoSuchElementException(errMsg);
 		}
 	}
 
@@ -209,7 +250,6 @@ public class PageObject {
 		try {
 			Thread.sleep(timeout);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

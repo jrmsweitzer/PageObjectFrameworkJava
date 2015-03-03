@@ -1,6 +1,7 @@
 package org.catalystitservices.PageObjectFramework.Models.Heroku;
 
 import org.catalystitservices.PageObjectFramework.Framework.PageObject;
+import org.catalystitservices.PageObjectFramework.Framework.Exceptions.InvalidSelectOptionException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -17,7 +18,12 @@ public class HerokuDropdown extends PageObject implements IHerokuApp {
 
     public HerokuDropdown SelectOption(String option)
     {
-        selectByText(_ddOptions, option);
+        try {
+			selectByText(_ddOptions, option);
+		} catch (InvalidSelectOptionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         sleep(1000);
         return this;
     }

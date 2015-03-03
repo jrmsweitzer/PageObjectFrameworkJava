@@ -3,6 +3,10 @@ package org.catalystitservices.PageObjectFramework.Framework;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +30,7 @@ public class SeleniumLogger {
     private String _logFilePath;
 
     // The Directory of the log files.
-    private String _logDir = "C:\\Selenium\\Logs\\";
+    private String _logDir = SeleniumSettings.getLogDirectory();
     
     /** SeleniumLogger GetLogger(string descriptiveLogName)
      * 
@@ -65,29 +69,38 @@ public class SeleniumLogger {
     private SeleniumLogger(String descriptiveLogName)
     {
         createLogDirectory();
-        Date datetime = new Date();
+        Date today = new Date();
+        SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+        String date = DATE_FORMAT.format(today);
+        
         this._logFilePath = String.format("%s%s_%s.txt",
                 _logDir,
-                datetime.toString(),
+                date,
                 descriptiveLogName);
 
         File f = new File(this._logFilePath);
         if (!f.exists())
         {
-            writeStartMessage(datetime);
+            writeStartMessage();
         }
     }
 
     private void createLogDirectory()
     {
-    	File dir = new File(_logDir);
-        if (!dir.exists())
+    	Path path = Paths.get(_logDir);
+    	//File dir = new File(_logDir);
+        if (Files.notExists(path))
         {
-            dir.mkdir();
+            try {
+				Files.createDirectory(path);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
     }
 
-    private void writeStartMessage(Date datetime)
+    private void writeStartMessage()
     {
     	log("Starting Log...", Message);
     }
@@ -95,12 +108,14 @@ public class SeleniumLogger {
     private void log(String message, String level)
     {
         final String msgfmt = "%s%s- %s\n";
-        Date datetime = new Date();
+        Date today = new Date();
+        SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:SS");
+        String time = TIME_FORMAT.format(today);
 
         try (FileWriter outfile = new FileWriter(_logFilePath, true))
         {
             outfile.write(String.format(msgfmt, 
-                datetime.toString(), level, message));
+                time, level, message));
             outfile.close();
         } catch (IOException e) {
 			e.printStackTrace();
