@@ -10,6 +10,7 @@ public class SeleniumSettings {
 	
 	private static int _defaultTimeout = 5;
 	private static String _logDirectory = "C:\\Selenium\\Logs\\";
+	private static String _seleniumLog = "SeleniumLog";
 	private static String _actionLog = "Actions";
 	private static boolean _logAllActions = true;
 	
@@ -50,6 +51,11 @@ public class SeleniumSettings {
     public static String getLogDirectory()
     {
     	return _logDirectory;
+    }
+    
+    public static String getSeleniumLogName()
+    {
+    	return _seleniumLog;
     }
     
     public static boolean logAllActions()

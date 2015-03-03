@@ -1,26 +1,49 @@
 package org.catalystitservices.PageObjectFramework.Models;
 
 import org.catalystitservices.PageObjectFramework.Framework.PageObject;
+import org.catalystitservices.PageObjectFramework.Framework.SeleniumLogger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class Google extends PageObject {
+	
+	private SeleniumLogger _logger;
 
 	public Google(WebDriver driver) {
 		super(driver);
 		_url = "https://www.google.com";
 		goTo(_url);
+		
+		_logger = SeleniumLogger.getLogger("Google");
+		_logger.logMessage("Making new Google PageObject.");
 	}
 	
 	private static By _inputSearch = By.name("q");
 	private static By _btnSearch = By.name("btnG");
 	
-	public Google searchFor(String value)
-	{
-		clearAndSendKeys(_inputSearch, value);
-		click(_btnSearch);
-		
-		return this;
-	}
+    public Google appendSearchText(String text)
+    {
+        sendKeys(_inputSearch, text);
+        _logger.logMessage(String.format("Appending text '%s' to google search bar.", text));
+        return this;
+    }
+    public Google enterSearchText(String text)
+    {
+        clearAndSendKeys(_inputSearch, text);
+        _logger.logMessage(String.format("Clearing and entering text '%s' to google search bar.", text));
+        return this;
+    }
+    public Google search()
+    {
+        click(_btnSearch);
+        _logger.logMessage("Clicking Search.");
+        return this;
+    }
+    public Google returnToGoogle()
+    {
+        goTo(_url, "Google");
+        _logger.logMessage("Returning control of driver to google");
+        return new Google(_driver);
+    }
 
 }

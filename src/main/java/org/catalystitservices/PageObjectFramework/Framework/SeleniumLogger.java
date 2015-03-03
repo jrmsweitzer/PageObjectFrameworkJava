@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Timer;
 
 public class SeleniumLogger {
 	
@@ -103,19 +102,21 @@ public class SeleniumLogger {
     private void writeStartMessage()
     {
     	log("Starting Log...", Message);
+    	logDashedLine();
     }
 
     private void log(String message, String level)
     {
-        final String msgfmt = "%s%s- %s\n";
+        final String msgfmt = "%s%s- %s%s";
         Date today = new Date();
         SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:SS");
-        String time = TIME_FORMAT.format(today);
+        String time = TIME_FORMAT.format(today).substring(0, 8);
 
         try (FileWriter outfile = new FileWriter(_logFilePath, true))
         {
             outfile.write(String.format(msgfmt, 
-                time, level, message));
+                time, level, message,
+                System.getProperty("line.separator")));
             outfile.close();
         } catch (IOException e) {
 			e.printStackTrace();
@@ -139,9 +140,7 @@ public class SeleniumLogger {
 
     public void logFinishTestSuite()
     {
-    	logDashedLine();
         log("Finished Test Suite!", Finish);
-        logDashedLine();
     }
 
     public void logInfo(String infoMessage)
@@ -161,21 +160,18 @@ public class SeleniumLogger {
 
     public void logStartTest(String testName)
     {
-    	logDashedLine();
         log(testName + "() started!", Start);
-        logDashedLine();
     }
 
     public void logStartTestSuite()
     {
-    	logDashedLine();
         log("Starting Test Suite!", Start);
     }
 
-    public void logTime(String message, Timer timeSpan)
+    public void logTime(String message, double time)
     {
-    	log(String.format("{0}: {1}",
-            message, timeSpan), Time);
+    	log(String.format("%s: %s",
+            message, time), Time);
     }
 
     public void logWarning(String warningMessage)

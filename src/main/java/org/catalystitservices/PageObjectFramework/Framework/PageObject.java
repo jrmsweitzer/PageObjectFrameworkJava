@@ -200,8 +200,8 @@ public class PageObject {
 	{
         if (_logActions)
         {
-            _logger.logMessage(String.format("SndKy: {0}", value));
-            _logger.logMessage(String.format("   to: {0}", by));
+            _logger.logMessage(String.format("SndKy: %s", value));
+            _logger.logMessage(String.format("   to: %s", by));
         }
 		find(by).sendKeys(value);
 	}
@@ -216,8 +216,8 @@ public class PageObject {
 	{
         if (_logActions)
         {
-            _logger.logMessage(String.format("Selct: {0}", optionText));
-            _logger.logMessage(String.format("   at: {0}", by));
+            _logger.logMessage(String.format("Selct: %s", optionText));
+            _logger.logMessage(String.format("   at: %s", by));
         }
 		Select select = new Select(find(by));
 		if (!select.equals(null))
