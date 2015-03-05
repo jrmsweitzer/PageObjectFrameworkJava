@@ -84,7 +84,7 @@ public class ByFormatter extends By {
 		for (int i = 0; i < numVars; i++)
 		{
 			String replacement = "%s";
-			by = by.replace(replacement, vars[i]);
+			by = by.replaceFirst(replacement, vars[i]);
 		}
 		switch(_formatter)
 		{
