@@ -90,7 +90,7 @@ public class Presentation extends PageObjectTest {
             .searchYouTube("dQw4w9WgXcQ")
             .clickVideoAtIndex("1");
 
-        youtube.sleep(52000);
+        youtube.sleep(2000);
 
         CookieClicker cookieclicker = new CookieClicker(getDriver());
         cookieclicker

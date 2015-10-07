@@ -360,7 +360,7 @@ public class PageObject {
      */
     protected void waitForTitle(String expectedTitle)
     {
-        waitForPartialUrl(expectedTitle, _defaultTimeout);
+        waitForTitle(expectedTitle, _defaultTimeout);
     }
 
     /**
