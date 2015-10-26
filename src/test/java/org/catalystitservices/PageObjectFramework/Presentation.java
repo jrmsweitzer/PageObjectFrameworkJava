@@ -93,18 +93,7 @@ public class Presentation extends PageObjectTest {
         youtube.sleep(2000);
 
         CookieClicker cookieclicker = new CookieClicker(getDriver());
-        cookieclicker
-            .clickCookie(100)
-            .buyGrandma()
-            .clickCookie(115)
-            .buyGrandma()
-            .clickCookie(133)
-            .buyGrandma()
-            .clickCookie(153)
-            .buyGrandma()
-            .clickCookie(465)
-            .buyFarm()
-            .clickCookie(500);
+        cookieclicker.clickCookie(50);
         
         if (emailUsername != NOTSET && emailPassword != NOTSET)
         {

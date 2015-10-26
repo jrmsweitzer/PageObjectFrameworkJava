@@ -85,18 +85,15 @@ public class SeleniumLogger {
     }
 
     private void createLogDirectory()
-    {
-    	Path path = Paths.get(_logDir);
-    	//File dir = new File(_logDir);
-        if (Files.notExists(path))
-        {
-            try {
-				Files.createDirectory(path);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        }
+    { 
+    	  File theDir = new File(_logDir);
+          if(!theDir.exists()){
+          	try{
+          		theDir.mkdirs();
+          	}catch(SecurityException se){
+          		se.printStackTrace();
+          	}
+          } 
     }
 
     private void writeStartMessage()
@@ -112,6 +109,9 @@ public class SeleniumLogger {
         SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:SS");
         String time = TIME_FORMAT.format(today).substring(0, 8);
 
+        
+      
+        
         try (FileWriter outfile = new FileWriter(_logFilePath, true))
         {
             outfile.write(String.format(msgfmt, 

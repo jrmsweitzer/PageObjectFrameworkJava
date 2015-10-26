@@ -6,10 +6,10 @@ public class SeleniumSettings {
 	public static String CHROME = "chrome";
 	public static String IE = "ie";
 
-	private static String _browser = FIREFOX;
+	private static String _browser = CHROME;
 	
 	private static int _defaultTimeout = 5;
-	private static String _logDirectory = "C:\\Selenium\\Logs\\";
+	private static String _logDirectory = "C:\\Users\\"+System.getProperty("user.name")+"\\Selenium\\Logs\\";
 	private static String _seleniumLog = "SeleniumLog";
 	private static String _actionLog = "Actions";
 	private static boolean _logAllActions = true;

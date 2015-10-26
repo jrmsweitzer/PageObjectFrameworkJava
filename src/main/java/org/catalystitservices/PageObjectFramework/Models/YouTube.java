@@ -15,7 +15,7 @@ public class YouTube extends PageObject {
 
     private static final By _inputSearch = By.name("search_query");
     private static final By _btnSearch = By.id("search-btn");
-    private static final ByFormatter _linkVideoByIndex = ByFormatter.xpath("(//h3[@class='yt-lockup-title'])[%s]");
+    private static final ByFormatter _linkVideoByIndex = ByFormatter.xpath("(//h3[contains(@class, 'yt-lockup-title')])[%s]");
 
     public YouTube searchYouTube(String text)
     {
