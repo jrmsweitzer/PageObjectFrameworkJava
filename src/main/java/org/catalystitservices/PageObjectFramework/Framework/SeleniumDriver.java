@@ -9,43 +9,43 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public class SeleniumDriver {
 	
-	protected static WebDriver _driver;
+	protected static WebDriver driver;
 
 	public static WebDriver getDriver()
 	{
-		if (_driver == null)
+		if (driver == null)
 		{
 			if (SeleniumSettings.getBrowser() == SeleniumSettings.FIREFOX)
 			{
-				_driver = new FirefoxDriver();				
+				driver = new FirefoxDriver();				
 			}
 			else if (SeleniumSettings.getBrowser() == SeleniumSettings.CHROME)
 			{
 				System.setProperty("webdriver.chrome.driver", 
 						SeleniumSettings.getDriver(SeleniumSettings.CHROME));
-				_driver = new ChromeDriver();
+				driver = new ChromeDriver();
 				
 			}
 			else
 			{
 				System.setProperty("webdriver.ie.driver", 
 						SeleniumSettings.getDriver(SeleniumSettings.IE));
-				_driver = new InternetExplorerDriver();
+				driver = new InternetExplorerDriver();
 			}
 			configureDriver();
 		}
-		return _driver;
+		return driver;
 	}
 	
 	private static void configureDriver()
 	{
 		setTimeout();
-		_driver.manage().deleteAllCookies();
-		_driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
+		driver.manage().window().maximize();
 	}
 	
 	private static void setTimeout()
 	{
-		_driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 	}
 }

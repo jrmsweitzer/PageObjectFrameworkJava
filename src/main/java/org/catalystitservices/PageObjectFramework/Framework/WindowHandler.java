@@ -12,15 +12,15 @@ import org.openqa.selenium.WebDriver;
 public class WindowHandler {
     // This class is designed to help you control multiple windows with Selenium.
 	
-	private WebDriver _driver;
-	private Map<String, String> _windowHandles;
+	private WebDriver driver;
+	private Map<String, String> windowHandles;
 	
 	private int currentWindowHandleCount = 0;
 	public static final String MainWindowHandle = "Main Window";
 	
 	public WindowHandler(WebDriver driver)
 	{
-		_driver = driver;
+		this.driver = driver;
 		setStartingWindowHandle();
 	}
 
@@ -43,12 +43,12 @@ public class WindowHandler {
 		
 		for (int i = 0; i < windowCount; i++)
 		{
-			_driver.switchTo().window(
-					(String) _driver.getWindowHandles().toArray()[i]);
-			String handle = _driver.getWindowHandle();
-			if(!_windowHandles.containsValue(handle))
+			driver.switchTo().window(
+					(String) driver.getWindowHandles().toArray()[i]);
+			String handle = driver.getWindowHandle();
+			if(!windowHandles.containsValue(handle))
 			{
-				_windowHandles.put(handleName, handle);
+				windowHandles.put(handleName, handle);
 				currentWindowHandleCount++;
 			}
 		}
@@ -59,7 +59,7 @@ public class WindowHandler {
     /// </summary>
 	public int getWindowHandleCount()
 	{
-		return _driver.getWindowHandles().size();
+		return driver.getWindowHandles().size();
 	}
 
     /// <summary>
@@ -69,7 +69,7 @@ public class WindowHandler {
     /// </summary>
 	private void setStartingWindowHandle()
 	{
-		_windowHandles = new HashMap<String, String>();
+		windowHandles = new HashMap<String, String>();
 		if(getWindowHandleCount() > 1)
 		{
             Assert.fail(String.format(
@@ -77,7 +77,7 @@ public class WindowHandler {
                 getWindowHandleCount()));
 		}
 		
-		_windowHandles.put(MainWindowHandle, _driver.getWindowHandle());
+		windowHandles.put(MainWindowHandle, driver.getWindowHandle());
 		currentWindowHandleCount = 1;
 	}
 
@@ -89,14 +89,14 @@ public class WindowHandler {
     /// </summary>
 	public void switchToHandle(String handleName)
 	{
-		if(!_windowHandles.containsKey(handleName))
+		if(!windowHandles.containsKey(handleName))
 		{
             Assert.fail(String.format(
                 "Window Handle with name %s has not been saved. Call AddNewWindowHandle(handleName) to add the handle.",
                 handleName));
 		}
 		
-		String targetHandle = _windowHandles.get(handleName);
-		_driver.switchTo().window(targetHandle);
+		String targetHandle = windowHandles.get(handleName);
+		driver.switchTo().window(targetHandle);
 	}
 }

@@ -12,14 +12,15 @@ import org.openqa.selenium.WebElement;
 /// </summary>
 public class ByFormatter extends By {
 	
+	private String locator;
+	private String formatter;
+
 	private ByFormatter(String locator, String formatter)
 	{
-		_locator = locator;
-		_formatter = formatter;
+		this.locator = locator;
+		this.formatter = formatter;
 	}
 	
-	private String _locator;
-	private String _formatter;
 	
 	private static final String FORMATTER_CLASSNAME = "className";
 	private static final String FORMATTER_CSSSELECTOR = "cssSelector";
@@ -74,19 +75,19 @@ public class ByFormatter extends By {
 	public String toString()
 	{
 		return String.format("ByFormatter.%s: %s",
-				_formatter, _locator);
+				formatter, locator);
 	}
 	
 	public By format(String... vars)
 	{
 		int numVars = vars.length;
-		String by = _locator;
+		String by = locator;
 		for (int i = 0; i < numVars; i++)
 		{
 			String replacement = "%s";
 			by = by.replaceFirst(replacement, vars[i]);
 		}
-		switch(_formatter)
+		switch(formatter)
 		{
         case FORMATTER_CLASSNAME:
             return By.className(by);

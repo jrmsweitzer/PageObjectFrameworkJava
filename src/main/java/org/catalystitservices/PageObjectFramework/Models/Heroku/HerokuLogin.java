@@ -9,8 +9,8 @@ public class HerokuLogin extends PageObject implements IHerokuApp {
 
 	public HerokuLogin(WebDriver driver) {
 		super(driver);
-        _url = "http://the-internet.herokuapp.com/login";
-        goTo(_url);
+        url = "http://the-internet.herokuapp.com/login";
+        goTo(url);
 	}
 
     private static final By _inputUsername = By.id("username");
@@ -45,8 +45,8 @@ public class HerokuLogin extends PageObject implements IHerokuApp {
 
     public HerokuLogin returnToLogin()
     {
-        goTo(_url);
-        return new HerokuLogin(_driver);
+        goTo(url);
+        return new HerokuLogin(driver);
     }
 
     public HerokuLogin writeInUsernameTextBox(String text)

@@ -8,9 +8,9 @@ public class HerokuMain extends PageObject implements IHerokuApp {
 
 	public HerokuMain(WebDriver driver) {
 		super(driver);
-		_url = "http://the-internet.herokuapp.com/";
+		url = "http://the-internet.herokuapp.com/";
 		_title = "The Internet";
-		goTo(_url, _title);
+		goTo(url, _title);
 	}
 
     public final static String Checkboxes = "Checkboxes";
@@ -26,11 +26,11 @@ public class HerokuMain extends PageObject implements IHerokuApp {
         switch (linkText)
         {
             case Checkboxes:
-                return new HerokuCheckboxes(_driver);
+                return new HerokuCheckboxes(driver);
             case Dropdown:
-                return new HerokuDropdown(_driver);
+                return new HerokuDropdown(driver);
             case FormAuthentication:
-                return new HerokuLogin(_driver);
+                return new HerokuLogin(driver);
             default:
                 return this;
         }
@@ -38,8 +38,8 @@ public class HerokuMain extends PageObject implements IHerokuApp {
 
     public HerokuMain returnToHeroku()
     {
-        goTo(_url, _title);
-        return new HerokuMain(_driver);
+        goTo(url, _title);
+        return new HerokuMain(driver);
     }
 	
 	

@@ -11,61 +11,61 @@ import org.junit.runner.Description;
 
 public class PageObjectTest extends SeleniumDriver {
 	
-	private static String _logName = SeleniumSettings.getSeleniumLogName();
-	private static SeleniumLogger _logger = SeleniumLogger.getLogger(_logName);
+	private static String logName = SeleniumSettings.getSeleniumLogName();
+	private static SeleniumLogger logger = SeleniumLogger.getLogger(logName);
 	
-	private static long _suiteStartTime;
-	private static long _testStartTime;
+	private static long suiteStartTime;
+	private static long testStartTime;
 	
 	@Rule public TestName name = new TestName();
 
 	@BeforeClass
 	public static void BeforeClass()
 	{
-		_logger.logStartTestSuite();
-		_suiteStartTime = System.currentTimeMillis();
+		logger.logStartTestSuite();
+		suiteStartTime = System.currentTimeMillis();
 	}
 	
 	@Before
 	public void BeforeEach()
 	{
-		_logger.logStartTest(name.getMethodName());
-		_testStartTime = System.currentTimeMillis();
+		logger.logStartTest(name.getMethodName());
+		testStartTime = System.currentTimeMillis();
 	}
 	
 	@After
 	public void AfterEach()
 	{
-		_driver.manage().deleteAllCookies();
-		_driver.quit();
-		_driver = null;
+		driver.manage().deleteAllCookies();
+		driver.quit();
+		driver = null;
 	}
 	
 	@Rule public TestWatcher watcher = new TestWatcher() {
 		@Override
 		protected void failed(Throwable e, Description description) {
-			_logger.logFail(name.getMethodName());
+			logger.logFail(name.getMethodName());
 		}
 		
 		@Override
 		protected void succeeded(Description description) {
-			_logger.logPass(name.getMethodName());
+			logger.logPass(name.getMethodName());
 		}
 		
 		@Override
 		protected void finished(Description description) {
-			double elapsedTime = ((double)(System.currentTimeMillis() - _testStartTime))/1000;
-			_logger.logTime("Elapsed Time", elapsedTime);
+			double elapsedTime = ((double)(System.currentTimeMillis() - testStartTime))/1000;
+			logger.logTime("Elapsed Time", elapsedTime);
 		}
 	};
 	
 	@AfterClass
 	public static void AfterClass()
 	{
-		_logger.logFinishTestSuite();
-		double totalTime = ((double)(System.currentTimeMillis() - _suiteStartTime))/1000;
-		_logger.logTime("Total Time", totalTime);
-		_logger.logDashedLine();
+		logger.logFinishTestSuite();
+		double totalTime = ((double)(System.currentTimeMillis() - suiteStartTime))/1000;
+		logger.logTime("Total Time", totalTime);
+		logger.logDashedLine();
 		killDrivers();
 	}
 	

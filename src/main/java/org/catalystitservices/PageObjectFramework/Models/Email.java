@@ -9,100 +9,98 @@ public class Email extends PageObject {
 
 	public Email(WebDriver driver) {
 		super(driver);
-        _url = "https://mail.catalystitservices.com/";
-        goTo(_url);
+		url = "https://mail.catalystitservices.com/";
+		goTo(url);
 	}
 
-    private static final By _inputUsername = By.id("username");
-    private static final By _inputPassword = By.id("password");
-    private static final By _btnSignIn = By.xpath("//input[@type='submit']");
+	private static final By inputUsername = By.id("username");
+	private static final By inputPassword = By.id("password");
+	private static final By btnSignIn = By.xpath("//input[@type='submit']");
 
-    private static final By _btnNewEmail = By.xpath("//a[.='New']");
-    private static final By _inputTo = By.id("divTo");
-    private static final By _inputSubject = By.id("txtSubj");
-    private static final By _ifrMessage = By.id("ifBdy");
-    private static final By _bodyMessage = By.xpath("//style[@id='owaTempEditStyle']/../../body");
-    private static final By _btnSend = By.id("send");
-    private static final By _btnAddressBook = By.id("divToolbarButtonaddressbook");
+	private static final By btnNewEmail = By.xpath("//a[.='New']");
+	private static final By inputTo = By.id("divTo");
+	private static final By inputSubject = By.id("txtSubj");
+	private static final By ifrMessage = By.id("ifBdy");
+	private static final By bodyMessage = By.xpath("//style[@id='owaTempEditStyle']/../../body");
+	private static final By btnSend = By.id("send");
+	private static final By btnAddressBook = By.id("divToolbarButtonaddressbook");
 
-    public Email logInWithCredentials(String username, String password)
-    {
-        sendKeys(_inputUsername, username);
-        sendKeys(_inputPassword, password);
-        click(_btnSignIn);
+	public Email logInWithCredentials(String username, String password) {
+		sendKeys(inputUsername, username);
+		sendKeys(inputPassword, password);
+		click(btnSignIn);
 
-        return this;
-    }
+		return this;
+	}
 
-    public Email composeNewEmail(String to, String subject, String message)
-    {
-        click(_btnNewEmail);
+	public Email composeNewEmail(String to, String subject, String message) {
+		click(btnNewEmail);
 
-        _windowHandler.addNewWindowHandle("Compose Email");
-        _windowHandler.switchToHandle("Compose Email");
+		windowHandler.addNewWindowHandle("Compose Email");
+		windowHandler.switchToHandle("Compose Email");
 
-        sendKeys(_inputTo, to);
-        sleep(1000);
-        sendKeys(_inputSubject, subject);
-        sleep(1000);
+		sendKeys(inputTo, to);
+		sleep(1000);
+		sendKeys(inputSubject, subject);
+		sleep(1000);
 
-        _driver.switchTo().frame(find(_ifrMessage));
-        sendKeys(_bodyMessage, message);
+		driver.switchTo().frame(find(ifrMessage));
+		sendKeys(bodyMessage, message);
 
-        _windowHandler.switchToHandle("Compose Email");
-        click(_btnSend);
+		windowHandler.switchToHandle("Compose Email");
+		click(btnSend);
 
-        _windowHandler.switchToHandle(WindowHandler.MainWindowHandle);
+		windowHandler.switchToHandle(WindowHandler.MainWindowHandle);
 
-        return this;
-    }
+		return this;
+	}
 
 	public void openNewEmailWindow() {
 
-		click(_btnNewEmail);
-		
-		_windowHandler.addNewWindowHandle("Compose Email");
-		_windowHandler.switchToHandle("Compose Email");
-		
+		click(btnNewEmail);
+
+		windowHandler.addNewWindowHandle("Compose Email");
+		windowHandler.switchToHandle("Compose Email");
+
 	}
 
 	public void openNewEmailWindow2() {
 
-		click(_btnNewEmail);
-		
-		_windowHandler.addNewWindowHandle("Compose Email 2");
-		_windowHandler.switchToHandle("Compose Email 2");
-		
+		click(btnNewEmail);
+
+		windowHandler.addNewWindowHandle("Compose Email 2");
+		windowHandler.switchToHandle("Compose Email 2");
+
 	}
 
 	public void openNewEmailWindow3() {
 
-		click(_btnNewEmail);
-		
-		_windowHandler.addNewWindowHandle("Compose Email 3");
-		_windowHandler.switchToHandle("Compose Email 3");
-		
+		click(btnNewEmail);
+
+		windowHandler.addNewWindowHandle("Compose Email 3");
+		windowHandler.switchToHandle("Compose Email 3");
+
 	}
 
 	public void openAddressBook() {
-		
-		click(_btnAddressBook);
 
-		_windowHandler.addNewWindowHandle("Address Book");
-		_windowHandler.switchToHandle("Address Book");
-		
+		click(btnAddressBook);
+
+		windowHandler.addNewWindowHandle("Address Book");
+		windowHandler.switchToHandle("Address Book");
+
 	}
 
 	public void goToEmailCompose() {
-		_windowHandler.switchToHandle("Compose Email");
+		windowHandler.switchToHandle("Compose Email");
 	}
 
 	public void goToEmailList() {
-        _windowHandler.switchToHandle(WindowHandler.MainWindowHandle);
-		
+		windowHandler.switchToHandle(WindowHandler.MainWindowHandle);
+
 	}
 
 	public void goToAddressBook() {
-		_windowHandler.switchToHandle("Address Book");
+		windowHandler.switchToHandle("Address Book");
 	}
 }

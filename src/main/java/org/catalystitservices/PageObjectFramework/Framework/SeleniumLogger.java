@@ -3,9 +3,6 @@ package org.catalystitservices.PageObjectFramework.Framework;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,23 +10,23 @@ import java.util.Map;
 
 public class SeleniumLogger {
 	
-    protected final String Warning = " WARN ";
-    protected final String Info = " INFO ";
-    protected final String Error = " ERROR";
-    protected final String Start = " START";
-    protected final String Finish = " FNSHD";
-    protected final String Pass = " PASS ";
+    protected final String warning = " WARN ";
+    protected final String info = " INFO ";
+    protected final String error = " ERROR";
+    protected final String start = " START";
+    protected final String finish = " FNSHD";
+    protected final String pass = " PASS ";
     protected final String Fail = " FAIL ";
-    protected final String Time = " TIME ";
-    protected final String Message = " -----";
-    protected final String DashedLine = "-------------------------------------------------";
+    protected final String timeStr = " TIME ";
+    protected final String msg = " -----";
+    protected final String dashedLine = "-------------------------------------------------";
 
     private static final Map<String, SeleniumLogger> LoggerDict =
         new HashMap<String, SeleniumLogger>();
-    private String _logFilePath;
+    private String logFilePath;
 
     // The Directory of the log files.
-    private String _logDir = SeleniumSettings.getLogDirectory();
+    private String logDir = SeleniumSettings.getLogDirectory();
     
     /** SeleniumLogger GetLogger(string descriptiveLogName)
      * 
@@ -72,12 +69,12 @@ public class SeleniumLogger {
         SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
         String date = DATE_FORMAT.format(today);
         
-        this._logFilePath = String.format("%s%s_%s.txt",
-                _logDir,
+        this.logFilePath = String.format("%s%s_%s.txt",
+                logDir,
                 date,
                 descriptiveLogName);
 
-        File f = new File(this._logFilePath);
+        File f = new File(this.logFilePath);
         if (!f.exists())
         {
             writeStartMessage();
@@ -86,7 +83,7 @@ public class SeleniumLogger {
 
     private void createLogDirectory()
     { 
-    	  File theDir = new File(_logDir);
+    	  File theDir = new File(logDir);
           if(!theDir.exists()){
           	try{
           		theDir.mkdirs();
@@ -98,7 +95,7 @@ public class SeleniumLogger {
 
     private void writeStartMessage()
     {
-    	log("Starting Log...", Message);
+    	log("Starting Log...", msg);
     	logDashedLine();
     }
 
@@ -112,7 +109,7 @@ public class SeleniumLogger {
         
       
         
-        try (FileWriter outfile = new FileWriter(_logFilePath, true))
+        try (FileWriter outfile = new FileWriter(logFilePath, true))
         {
             outfile.write(String.format(msgfmt, 
                 time, level, message,
@@ -125,12 +122,12 @@ public class SeleniumLogger {
 
     public void logDashedLine()
     {
-    	log(DashedLine, Message);
+    	log(dashedLine, msg);
     }
 
     public void logError(String errorMessage)
     {
-        log(errorMessage, Error);
+        log(errorMessage, error);
     }
 
     public void logFail(String testName)
@@ -140,42 +137,42 @@ public class SeleniumLogger {
 
     public void logFinishTestSuite()
     {
-        log("Finished Test Suite!", Finish);
+        log("Finished Test Suite!", finish);
     }
 
     public void logInfo(String infoMessage)
     {
-    	log(infoMessage, Info);
+    	log(infoMessage, info);
     }
 
     public void logMessage(String message)
     {
-    	log(message, Message);
+    	log(message, msg);
     }
 
     public void logPass(String testName)
     {
-    	log(testName + "() passed!", Pass);
+    	log(testName + "() passed!", pass);
     }
 
     public void logStartTest(String testName)
     {
-        log(testName + "() started!", Start);
+        log(testName + "() started!", start);
     }
 
     public void logStartTestSuite()
     {
-        log("Starting Test Suite!", Start);
+        log("Starting Test Suite!", start);
     }
 
     public void logTime(String message, double time)
     {
     	log(String.format("%s: %s",
-            message, time), Time);
+            message, time), timeStr);
     }
 
     public void logWarning(String warningMessage)
     {
-    	log(warningMessage, Warning);
+    	log(warningMessage, warning);
     }
 }

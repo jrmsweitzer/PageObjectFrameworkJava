@@ -26,27 +26,27 @@ import org.openqa.selenium.support.ui.Select;
 public class PageObject {
 	
     // Driver and Page-specific stuff
-	protected WebDriver _driver;
-	protected String _url;
+	protected WebDriver driver;
+	protected String url;
 	protected String _title;
 	
 	// Config stuff
-	private boolean _logActions = SeleniumSettings.logAllActions();
-	private String _actionLog = SeleniumSettings.getActionLogName();
+	private boolean logActions = SeleniumSettings.logAllActions();
+	private String actionLog = SeleniumSettings.getActionLogName();
 	
-	private int _defaultTimeout = SeleniumSettings.getDefaultTimeout();
+	private int defaultTimeout = SeleniumSettings.getDefaultTimeout();
 	
-	private SeleniumLogger _logger;
-	protected WindowHandler _windowHandler;
+	private SeleniumLogger logger;
+	protected WindowHandler windowHandler;
 	
 	public PageObject(WebDriver driver)
 	{
-		_driver = driver;
-		_windowHandler = new WindowHandler(_driver);
+		this.driver = driver;
+		windowHandler = new WindowHandler(driver);
 		
-		if(_logActions)
+		if(logActions)
 		{
-			_logger = SeleniumLogger.getLogger(_actionLog);
+			logger = SeleniumLogger.getLogger(actionLog);
 		}
 	}
 	
@@ -60,9 +60,9 @@ public class PageObject {
 	 */
 	protected void clear(By by)
 	{
-        if (_logActions)
+        if (logActions)
         {
-            _logger.logMessage(String.format("Clear: %s", by));
+            logger.logMessage(String.format("Clear: %s", by));
         }
 		find(by).clear();
 	}
@@ -84,9 +84,9 @@ public class PageObject {
 	 */
 	protected void click(By by)
 	{
-        if (_logActions)
+        if (logActions)
         {
-            _logger.logMessage(String.format("Click: %s", by));
+            logger.logMessage(String.format("Click: %s", by));
         }
 		find(by).click();
 	}
@@ -100,18 +100,18 @@ public class PageObject {
 	{
 		long startTime = System.currentTimeMillis();
 		
-		while(_driver.findElements(by).size() == 0)
+		while(driver.findElements(by).size() == 0)
 		{
-			if (System.currentTimeMillis() - startTime > _defaultTimeout)
+			if (System.currentTimeMillis() - startTime > defaultTimeout)
 			{
                 String errMsg = String.format(
 						"Could not find element %s after %d seconds.",
 						by,
-						_defaultTimeout);
+						defaultTimeout);
 				throw new NoSuchElementException(errMsg);
 			}
 		}
-		return _driver.findElement(by);
+		return driver.findElement(by);
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class PageObject {
 	 */
 	protected Collection<WebElement> findAll(By by)
 	{
-		return _driver.findElements(by);
+		return driver.findElements(by);
 	}
 
 	/**
@@ -159,7 +159,7 @@ public class PageObject {
 	 */
 	public String getUrl()
 	{
-		return _driver.getCurrentUrl();
+		return driver.getCurrentUrl();
 	}
 
 	/**
@@ -179,11 +179,11 @@ public class PageObject {
 	 */
 	public void goTo(String url, String expectedTitle)
 	{
-        if (_logActions)
+        if (logActions)
         {
-            _logger.logMessage(String.format("GoUrl: %s", url));
+            logger.logMessage(String.format("GoUrl: %s", url));
         }
-		_driver.get(url);
+		driver.get(url);
 		
 		if("optionalTitle" != expectedTitle)
 		{
@@ -198,10 +198,10 @@ public class PageObject {
 	 */
 	protected void sendKeys(By by, String value)
 	{
-        if (_logActions)
+        if (logActions)
         {
-            _logger.logMessage(String.format("SndKy: %s", value));
-            _logger.logMessage(String.format("   to: %s", by));
+            logger.logMessage(String.format("SndKy: %s", value));
+            logger.logMessage(String.format("   to: %s", by));
         }
 		find(by).sendKeys(value);
 	}
@@ -214,10 +214,10 @@ public class PageObject {
 	 */
 	protected void selectByText(By by, String optionText) throws InvalidSelectOptionException
 	{
-        if (_logActions)
+        if (logActions)
         {
-            _logger.logMessage(String.format("Selct: %s", optionText));
-            _logger.logMessage(String.format("   at: %s", by));
+            logger.logMessage(String.format("Selct: %s", optionText));
+            logger.logMessage(String.format("   at: %s", by));
         }
 		Select select = new Select(find(by));
 		if (!select.equals(null))
@@ -269,7 +269,7 @@ public class PageObject {
 	 */
 	protected void waitForElementToBeDeleted(By by)
 	{
-		waitForElementToBeDeleted(by, _defaultTimeout);
+		waitForElementToBeDeleted(by, defaultTimeout);
 	}
 
 	/**
@@ -299,7 +299,7 @@ public class PageObject {
 	 */
 	protected void waitForElementToExist(By by)
 	{
-		waitForElementToExist(by, _defaultTimeout);
+		waitForElementToExist(by, defaultTimeout);
 	}
 
 	/**
@@ -329,7 +329,7 @@ public class PageObject {
 	 */
     protected void waitForPartialUrl(String partialUrl)
     {
-        waitForPartialUrl(partialUrl, _defaultTimeout);
+        waitForPartialUrl(partialUrl, defaultTimeout);
     }
 
     /**
@@ -360,7 +360,7 @@ public class PageObject {
      */
     protected void waitForTitle(String expectedTitle)
     {
-        waitForTitle(expectedTitle, _defaultTimeout);
+        waitForTitle(expectedTitle, defaultTimeout);
     }
 
     /**
@@ -391,7 +391,7 @@ public class PageObject {
      */
 	protected void waitForUrl(String url)
 	{
-		waitForUrl(url, _defaultTimeout);
+		waitForUrl(url, defaultTimeout);
 	}
 
 	/**
